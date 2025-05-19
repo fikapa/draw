@@ -9,7 +9,7 @@ function App() {
   const [prevPos, setPrevPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    socket = io("https://your-server-url.onrender.com");
+    socket = io("https://draw-e2jv.onrender.com");
 
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
