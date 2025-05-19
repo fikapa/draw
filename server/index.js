@@ -20,3 +20,15 @@ io.on("connection", (socket) => {
 });
 
 server.listen(10000);
+
+const drawingHistory = [];
+
+io.on("connection", (socket) => {
+  // When a new client connects, send all past drawing data
+  socket.emit("drawingHistory", drawingHistory);
+
+  socket.on("draw", (data) => {
+    drawingHistory.push(data); // Save the line data
+    socket.broadcast.emit("draw", data); // Broadcast to others
+  });
+});

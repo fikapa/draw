@@ -14,6 +14,14 @@ function App() {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
+    // Draw all previous lines sent by the server
+    socket.on("drawingHistory", (history) => {
+      history.forEach(({ x0, y0, x1, y1, color }) => {
+        drawLine(x0, y0, x1, y1, color);
+      });
+    });
+
+    // Draw new lines from other users
     socket.on("draw", ({ x0, y0, x1, y1, color }) => {
       drawLine(x0, y0, x1, y1, color);
     });
@@ -43,7 +51,7 @@ function App() {
     const rect = canvasRef.current.getBoundingClientRect();
     return {
       x: e.clientX - rect.left,
-      y: e.clientY - rect.top
+      y: e.clientY - rect.top,
     };
   };
 
